@@ -1,28 +1,21 @@
-use crate::{
-    engine::{engine, GameState},
-    input::cli_input,
-    output::cli_output,
-};
+use crate::{engine::engine, input::cli_input, output::cli_output, state::GameState};
 
 mod engine;
 mod input;
 mod output;
+mod state;
 
 fn main() {
-    println!("Welcome to my mini rogue-like project (a Rust study)");
     let mut game_loop = true;
-    let mut prev_state: GameState = GameState {
-        quit: false,
-        startup: true,
-    };
+    let mut prev_state = GameState::new();
+    cli_output(&prev_state);
     while game_loop {
-        let input = cli_input();
-        let state: GameState = engine(input, prev_state);
+        let input = cli_input(&prev_state);
+        let state = engine(input, prev_state);
         if state.quit {
             game_loop = false;
         }
         cli_output(&state);
         prev_state = state;
     }
-    println!("Thanks for playing!")
 }

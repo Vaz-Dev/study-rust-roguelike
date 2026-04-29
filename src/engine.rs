@@ -1,8 +1,11 @@
-pub struct GameState {
-    pub quit: bool,
-    pub startup: bool,
-}
+use crate::{input::Input, state::GameState};
 
-pub fn engine(input: String, prev_state: GameState) -> GameState {
-    todo!()
+pub fn engine(input: Input, mut state: GameState) -> GameState {
+    match input {
+        Input::NewGame => todo!(),
+        Input::Quit => {
+            state.quit = true;
+            state
+        }
+    }
 }
